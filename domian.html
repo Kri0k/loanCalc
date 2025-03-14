@@ -1,0 +1,442 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Wix+Madefor+Display:wght@400..800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="calculator">
+    <h1 class="calculator_header">Рассчитайте ипотеку</h1>
+    <section class="calculator_box">
+        <section class="calculator_buttons">
+            <div class="calculator_picker">
+                <h4 class="calculator_text">Выберите программу
+                    <svg viewBox="0 0 24 24"><g id="Complete"><g id="info-circle"><g><circle cx="12" cy="12" data-name="--Circle" fill="none" id="_--Circle" r="10" stroke="#3D3D3D" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/><line fill="none" stroke="#3D3D3D" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="12" y2="16"/><line fill="none" stroke="#3D3D3D" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="8" y2="8"/></g></g></g></svg>
+                    <div class="calculator_disclaimer">
+                        <h4 class="calculator_disclaimer_text">Текущие ипотечные условия актуальны при заполнении заявки на сайте DOMИАН</h4>
+                    </div>
+                </h4>
+                <div class="calculator_dropdown">
+                    <div id="calcDropdown" toggle="0" class="calculator_dropdown_field">Стандартная</div>
+                    <svg id="calcSvg" class="calculator_arrow" viewbox="0 0 24 24"><path d="M12 5V19M12 5L6 11M12 5L18 11" stroke="#3d3d3d" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div id="calcOptions" class="calculator_dropdown_options">
+                        <div onclick="optFunc(this)" class="cdo_item" percentage="28" text="Стандартная">Стандартная</div>
+                        <div onclick="optFunc(this)" class="cdo_item" percentage="6" text="Семейная">Семейная</div>
+                        <div onclick="optFunc(this)" class="cdo_item" percentage="6" text="IT-ипотека">IT-ипотека</div>
+                        <div onclick="optFunc(this)" class="cdo_item" percentage="6" text="Военная">Военная</div>
+                    </div>
+                </div>
+            </div>
+            <div class="calculator_picker">
+                <h4 class="calculator_text">Стоимость квартиры</h4>
+                <input type="number" value="3500000" id="priceNum" class="calculator_pickerbox calculator_number" min="3500000" max="50000000">
+                <span class="calculator_rub">₽</span>
+                <input type="range" value="3500000" id="priceRang" class="calculator_range" min="3500000" max="50000000">
+            </div>
+            <div class="calculator_picker">
+                <h4 class="calculator_text">Первоначальный взнос</h4>
+                <input type="number" id="initNum" class="calculator_pickerbox calculator_number" value="1050000" min="350000" max="3465000">
+                <span class="calculator_percentage" id="calcInt">30%</span>
+                <input type="range" step="10000" id="initRang" class="calculator_range" value="1050000" min="350000" max="3465000">
+            </div>
+            <div class="calculator_picker">
+                <h4 class="calculator_text">Срок кредита</h4>
+                <input type="number" id="timeNum" value="15" class="calculator_pickerbox calculator_number">
+                <span class="calculator_years" id="calcYears">лет</span>
+                <input type="range" id="timeRang" value="15" class="calculator_range" min="1" max="30">
+            </div>
+        </section>
+        <section class="calculator_display">
+            <div class="calculator_panel">
+                <h4 class="calculator_text">Ежемесячный платеж</h4>
+                <h2 class="calculator_subheader" id="calcPayment">58081 ₽</h2>
+                <h3 class="calculator_bigtext">Ставка <span id="calcPerc">28</span></h3>
+                <h3 class="calculator_bigtext">Сумма кредита <span id="calcSum">2450000 ₽</span></h3>
+                <h5 class="calculator_fineprint">Расчет параметров кредита является предварительным</h5>
+            </div>
+        </section>
+    </section>
+</div>
+<style>
+    .calculator {
+        width: 100%;
+        padding: 2vw 13vw;
+        box-sizing: border-box;
+    }
+    .calculator_box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 5vw;
+    }
+    .calculator_header {
+        color: #D6001C;
+        text-transform: uppercase;
+        font-family: "Inter";
+        font-weight: 600;
+        font-size: 3.5vw;
+        margin: 2vw 0;
+    }
+    .calculator_buttons {
+        width: 100%;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        row-gap: 1vw;
+    }
+    .calculator_text {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        color: #3D3D3D;
+        font-family: "Wix Madefor Display";
+        font-weight: 400;
+        font-size: 1.2vw;
+        margin: 0.5vw 0;
+        align-items: center;
+    }
+    .calculator_text svg {
+        width: 1.8vw;
+        height: 1.8vw;
+        cursor: pointer;
+        margin-left: 0.4vw;
+    }
+    .calculator_picker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .calculator_pickerbox {
+        width: 100%;
+        height: 4vw;
+        border: none;
+        outline: none;
+        border-radius: 1vw;
+        background-color: #E8E8E8;
+        color: #3D3D3D;
+        font-size: 1.8vw;
+        font-family: "Wix Madefor Display";
+    }
+    .calculator_range {
+        width: 90%;
+        margin-top: -0.75vw;
+        height: 1.5vw;
+        accent-color: #D6001C;
+        background: transparent;
+        appearance: none;
+        border-radius: 1vw;
+    }
+    .calculator_range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background-color: #D6001C;
+        cursor: pointer;
+        height: 1.5vw;
+        width: 1.5vw;
+        border-radius: 1.5vw;
+    }
+    .calculator_range::-webkit-slider-runnable-track {
+        -webkit-appearance: none;
+        appearance: none;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+    }
+    .calculator_disclaimer {
+        position: absolute;
+        display: none;
+        width: 32vw;
+        padding: 1vw;
+        border-radius: 1vw;
+        background-color: #3d3d3ddb;
+        margin-top: -7vw;
+    }
+    .calculator_disclaimer_text {
+        font-family: "Wix Madefor Display";
+        font-weight: 400;
+        font-size: .8vw;
+        text-align: center;
+        color: #E8E8E8;
+        margin: 0;
+    }
+    .calculator_text svg:hover ~ .calculator_disclaimer,
+    .calculator_disclaimer:hover {
+        display: block;
+    }
+    .calculator_dropdown {
+        width: 100%;
+    }
+    .calculator_dropdown_field {
+        box-sizing: border-box;
+        display: flex;
+        border-radius: 1vw;
+        background-color: #E8E8E8;
+        width: 100%;
+        color: #3D3D3D;
+        font-size: 1.8vw;
+        font-family: "Wix Madefor Display";
+        height: 4vw;
+        align-items: center;
+        padding-left: 2vw;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+    .calculator_dropdown_options {
+        width: 34vw;
+        background-color: #E8E8E8;
+        box-sizing: border-box;
+        border-radius: 1vw;
+        height: fit-content;
+        position: absolute;
+        display: none;
+        z-index: 2;
+    }
+    .cdo_item {
+        padding: 0.5vw 0;
+        color: #3D3D3D;
+        font-size: 1.8vw;
+        font-family: "Wix Madefor Display";
+        padding-left: 2vw;
+        cursor: pointer;
+    }
+    .cdo_item:hover {
+        background-color: #3D3D3D;
+        color: #E8E8E8;
+    }
+    .calculator_number {
+        box-sizing: border-box;
+        padding-left: 2vw;
+        -webkit-appearance: none;
+    }
+    .calculator_number::-webkit-outer-spin-button,
+    .calculator_number::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .calculator_panel {
+        width: 100%;
+        padding: 3vw;
+        border-radius: 2vw;
+        background-color: #E8E8E8;
+        border-radius: 2vw;
+        box-sizing: border-box;
+    }
+    .calculator_fineprint {
+        color: #3D3D3D;
+        font-family: "Wix Madefor Display";
+        font-weight: 400;
+        font-size: .8vw;
+        margin: 1.5vw 0 0 0;
+    }
+    .calculator_subheader {
+        color: #3D3D3D;
+        font-family: "Wix Madefor Display";
+        font-weight: 600;
+        font-size: 2.7vw;
+        margin: .2vw 0 1.2vw 0;
+    }
+    .calculator_bigtext {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        color: #3D3D3D;
+        font-family: "Wix Madefor Display";
+        font-weight: 400;
+        font-size: 1.8vw;
+        margin: 0;
+        padding: .5vw 0;
+    }
+    .calculator_bigtext span {
+        font-weight: 600;
+        font-size: 2vw;
+    }
+    .calculator_bigtext:nth-child(3) {
+        border: #3D3D3D solid;
+        border-width: 0 0 .1vw 0;
+    }
+    .calculator_arrow {
+        width: 2vw;
+        height: 2vw;
+        position: absolute;
+        margin: -3vw 0 0 30.5vw;
+        cursor: pointer;
+        transition: transform .2s ease;
+    }
+    .calc-open {
+        display: block;
+    }
+    .calc-svg {
+        transform: rotate(180deg);
+    }
+    .calc-dropdown {
+        background-color: #cbcaca;
+        border-radius: .5vw;
+    }
+    .calculator_rub, .calculator_percentage, .calculator_years {
+        position: absolute;
+        color:  #3D3D3D;
+        opacity: .6;
+        font-family: "Wix Madefor Display";
+        font-weight: 600;
+        font-size: 1.8vw;
+        margin: 3.4vw 0 0 29.5vw;
+    }
+    .calculator_percentage {
+        margin-left: 27.3vw;
+    }
+    .calculator_years {
+        text-align: end;
+        width: 5vw;
+        margin: 3.3vw 0 0 26vw;
+    }
+    .calcRed {
+        color:#D6001C;
+    }
+    
+</style>
+<script>
+    var calcDropdown = document.getElementById("calcDropdown");
+    var calcOptions = document.getElementById("calcOptions");
+    var calcSvg = document.getElementById("calcSvg");
+    var cdoItem = document.querySelectorAll("cdo_item");
+
+    var priceNum = document.getElementById("priceNum");
+    var priceRang = document.getElementById("priceRang");
+    var initNum = document.getElementById("initNum");
+    var initRang = document.getElementById("initRang");
+    var calcInt = document.getElementById("calcInt");
+
+    var timeNum = document.getElementById("timeNum");
+    var timeRang = document.getElementById("timeRang");
+
+    var calcPerc = document.getElementById("calcPerc");
+    var calcSum = document.getElementById("calcSum");
+    var calcPayment = document.getElementById("calcPayment");
+
+
+
+
+    calcDropdown.addEventListener("click", function() {
+        if (this.getAttribute("toggle") == "0") {
+            calcOptions.classList.add("calc-open");
+            this.setAttribute("toggle", "1");
+            calcSvg.classList.add("calc-svg");
+            this.classList.add("calc-dropdown");
+        } else {
+            calcOptions.classList.remove("calc-open");
+            this.setAttribute("toggle", "0");
+            calcSvg.classList.remove("calc-svg");
+            this.classList.remove("calc-dropdown");
+        }
+    })
+
+    cdoItem.forEach((item) => {
+        item.addEventListener("click", function() {
+            var txt = document.createTextNode(this.innerHTML);
+            calcDropdown.appendChild(txt);
+        })
+    })
+
+    function optFunc(e) {
+        calcDropdown.innerText = e.getAttribute("text");
+        if (calcDropdown.getAttribute("toggle") == "0") {
+            calcOptions.classList.add("calc-open");
+            calcDropdown.setAttribute("toggle", "1");
+            calcSvg.classList.add("calc-svg");
+            calcDropdown.classList.add("calc-dropdown");
+        } else {
+            calcOptions.classList.remove("calc-open");
+            calcDropdown.setAttribute("toggle", "0");
+            calcSvg.classList.remove("calc-svg");
+            calcDropdown.classList.remove("calc-dropdown");
+            var percentage = e.getAttribute("percentage");
+            calcPerc.innerHTML = percentage.toString();
+        }
+        monthPayment();
+    }
+
+    
+
+
+    
+    function setInit() {
+        initRang.setAttribute("min", Math.round(priceNum.value*0.1));
+        initRang.setAttribute("max", Math.round(priceNum.value*0.99));
+        initRang.value = Math.round(priceNum.value*0.3);
+        initNum.setAttribute("min", Math.round(priceNum.value*0.1));
+        initNum.setAttribute("max", Math.round(priceNum.value*0.99));
+        initNum.value = Math.round(priceNum.value*0.3);
+        setInitPerc();
+        checkPercent();
+    }
+    function setInitPerc() {
+        var perctxt = Math.round(((initNum.value/priceNum.value)*100)).toString();
+        calcInt.innerHTML = perctxt + "%";
+        checkPercent();
+        monthPayment();
+    }
+    function checkPercent() {
+        var perctxt = Math.round(((initNum.value/priceNum.value)*100)).toString();
+        if (perctxt < 10 || perctxt > 99) {
+            calcInt.classList.add("calcRed");
+        } else {
+            calcInt.classList.remove("calcRed");
+        }
+        var loanSum = priceNum.value-initNum.value;
+        calcSum.innerHTML = loanSum.toString() + " ₽";
+    }
+    function calcYears() {
+        if (timeRang.value%10 < 5 && timeRang.value%10 > 0) {
+            if (timeRang.value%10 < 2) {
+                document.getElementById("calcYears").innerHTML = "год";
+            } else {
+                document.getElementById("calcYears").innerHTML = "года";
+            }
+        } else {
+            document.getElementById("calcYears").innerHTML = "лет";
+        }
+        monthPayment();
+    }
+
+    function monthPayment() {
+        var loanSum = priceNum.value-initNum.value;
+        var monthPercentage = parseInt(calcPerc.innerHTML)/1200;
+        var timeMonth = parseInt(timeNum.value)*12;
+        var a = Math.round(loanSum * monthPercentage / (1 - Math.pow(1 + monthPercentage, -timeMonth)));
+        calcPayment.innerHTML = a.toString() + " ₽";
+    }
+
+    priceNum.addEventListener("input", function() {
+        priceRang.value = priceNum.value;
+        setInit();
+    })
+    priceRang.addEventListener("input", function() {
+        priceNum.value = priceRang.value;
+        priceRang.value = priceNum.value;
+        setInit();
+    })
+
+    initNum.addEventListener("input", function() {
+        initRang.value = initNum.value;
+        setInitPerc();
+    })
+    initRang.addEventListener("input", function() {
+        initNum.value = initRang.value;
+        initRang.value = initNum.value;
+        setInitPerc();
+    })
+
+    timeNum.addEventListener("input", function() {
+        timeRang.value = timeNum.value;
+        calcYears();
+    })
+    timeRang.addEventListener("input", function() {
+        timeNum.value = timeRang.value;
+        timeRang.value = timeNum.value;
+        calcYears();
+    })
+</script>
+
+
+
+</body>
